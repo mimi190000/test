@@ -1,37 +1,15 @@
 **Task 6: Performance Analysis and Reporting**
 
-### **Objective**
-The objective of this task is to analyze the performance of a parallel program for finding the maximum value in an array. The analysis involves:
-- Experimenting with arrays of sizes 1,000, 1,000,000, and 1,000,000,000 integers.
-- Using 1, 2, 4, and 32 threads.
-- Measuring the runtime of the computation (excluding array generation).
-- Presenting results in tables and plots.
-- Summarizing findings and insights.
+### **Summary of Findings**
+Parallel execution demonstrates significant efficiency improvements for large arrays due to effective workload distribution across multiple threads. As the number of threads increases, the performance scales well initially, but diminishing returns are observed at higher thread counts. This is attributed to thread synchronization overhead, cache contention, and the costs associated with thread management. For small arrays, the computational cost of thread creation and synchronization often exceeds the benefits of parallelism, leading to limited performance gains.
 
----
 
 ### **Experimental Setup**
 
-1. **Hardware Specifications**:
-   - CPU: 8-core, 3.2 GHz
-   - L1 Cache Size: 64 KB
-   - RAM: 16 GB DDR4
-   - Operating System: Linux (64-bit)
-
-2. **Implementation**:
-   - The program divides the array among threads.
-   - Each thread computes its local maximum.
-   - Threads synchronize using a mutex to update the global maximum.
-
-3. **Runtime Measurement**:
-   - Time is measured using the `clock()` function.
-   - The runtime excludes array generation.
-
-4. **Array Sizes and Thread Counts**:
+ **Array Sizes and Thread Counts**:
    - Array sizes: `1,000`, `1,000,000`, `1,000,000,000`
    - Thread counts: `1`, `2`, `4`, `32`
 
----
 
 ### **Results**
 
@@ -77,38 +55,8 @@ The objective of this task is to analyze the performance of a parallel program f
    - Synchronization using a mutex introduces some delay.
    - Cache contention occurs for high thread counts.
 
----
 
-### **Conclusion**
-
-1. **Key Findings**:
+**Key Findings**:
    - Parallel execution improves performance, especially for large arrays.
    - The number of threads should be optimized based on the array size and hardware.
-
-2. **Suggestions**:
-   - For small arrays, limit the thread count to minimize overhead.
-   - Optimize further using techniques like cache padding to reduce contention.
-
-3. **Future Work**:
-   - Explore non-blocking synchronization methods.
-   - Test on varying hardware configurations to assess scalability.
-
----
-
-### **Appendix**
-
-#### **Code Snippet for Time Measurement**
-```c
-#include <time.h>
-clock_t start, end;
-double cpu_time_used;
-
-start = clock();
-/* Parallel computation */
-end = clock();
-cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-```
-
-#### **Hardware Utilization**
-Use tools like `htop` or `perf` to monitor CPU utilization during execution.
 
